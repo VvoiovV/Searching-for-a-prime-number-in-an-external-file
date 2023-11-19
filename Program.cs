@@ -8,6 +8,7 @@ namespace ConsoleApp9
         {
             string[] lines = readFile("identyfikator.txt");
             foreach (string line in lines)
+
             {
                 Console.WriteLine(line);
                 Console.WriteLine(" ");
