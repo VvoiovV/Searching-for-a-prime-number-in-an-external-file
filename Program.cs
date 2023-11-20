@@ -1,49 +1,53 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
-namespace ConsoleApp9
+class Program
 {
-    internal class Program
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            string[] lines = readFile("identyfikator.txt");
-            foreach (string line in lines)
+        string filePath = "identyfikator.txt";
 
+
+        string[] lines = File.ReadAllLines(filePath);
+
+        foreach (string line in lines)
+        {
+            if (IsPrimeString(line))
             {
                 Console.WriteLine(line);
-                Console.WriteLine(" ");
-            }
-
-            foreach (var liczba in lines)
-            {
-                string bezZnakow = liczba.Substring(3);
-
-                if (CzyLiczbaPierwsza(int.Parse(bezZnakow)))
-                {
-                    Console.WriteLine($"{bezZnakow} jest liczbą pierwszą.");
-                }
             }
         }
-        static string[] readFile(String file)
+    }
+
+    static bool IsPrimeString(string input)
+    {
+        string numericPart = input.Substring(3);
+
+        foreach (char digit in numericPart)
         {
-            string[] lines = File.ReadAllLines(file);
-            return lines;
-        }
-        static bool CzyLiczbaPierwsza(int n)
-        {
-            if (n <= 1)
+            if (!IsPrime(int.Parse(digit.ToString())))
             {
                 return false;
             }
-
-            for (int i = 2; i <= Math.Sqrt(n); i++)
-            {
-                if (n % i == 0)
-                {
-                    return false;
-                }
-            }
-            return true;
         }
+        return true;
+    }
+
+    static bool IsPrime(int number)
+    {
+        if (number < 2)
+        {
+            return false;
+        }
+
+        for (int i = 2; i <= Math.Sqrt(number); i++)
+        {
+            if (number % i == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
